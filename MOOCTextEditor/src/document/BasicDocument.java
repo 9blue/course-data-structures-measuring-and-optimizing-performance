@@ -46,13 +46,8 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 1 support videos 
         // if you need help.
-        List<String> setences = this.getTokens("[.!?]+");
-        String full_text = this.getText();
-        if(!full_text.endsWith(".") && !full_text.endsWith("?") && !full_text.endsWith("!") && full_text.length() != 0){
-            return setences.size()+1;
-        } else {
-            return setences.size();
-        }
+        List<String> setences = this.getTokens("[^.!?]+");
+		return setences.size();
 	}
 	
 	/**
