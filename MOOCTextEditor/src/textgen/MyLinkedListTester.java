@@ -22,7 +22,6 @@ public class MyLinkedListTester {
 	MyLinkedList<Integer> emptyList;
 	MyLinkedList<Integer> longerList;
 	MyLinkedList<Integer> list1;
-	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -42,7 +41,8 @@ public class MyLinkedListTester {
 		list1.add(65);
 		list1.add(21);
 		list1.add(42);
-		
+
+
 	}
 
 	
@@ -115,6 +115,21 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check size is correct ", 2, list1.size());
 		
 		// TODO: Add more tests here
+        try {
+            list1.remove(-1);
+            fail("Check out of bounds");
+        }
+        catch (IndexOutOfBoundsException e) {
+
+        }
+
+        try {
+            list1.remove(4);
+            fail("Check out of bounds");
+        }
+        catch (IndexOutOfBoundsException e) {
+
+        }
 	}
 	
 	/** Test adding an element into the end of the list, specifically
@@ -124,6 +139,17 @@ public class MyLinkedListTester {
 	public void testAddEnd()
 	{
         // TODO: implement this test
+        boolean a = list1.add(0);
+        int size = list1.size();
+        Integer lastEle = list1.get(size-1);
+        assertEquals("Add: check list is correct ", (Integer)0, lastEle);
+        try {
+            list1.add(null);
+            fail("Check out of null value");
+        }
+        catch (NullPointerException e) {
+
+        }
 		
 	}
 
@@ -133,6 +159,7 @@ public class MyLinkedListTester {
 	public void testSize()
 	{
 		// TODO: implement this test
+		assertEquals("Size: check size is correct ",3, list1.size());
 	}
 
 	
@@ -145,7 +172,23 @@ public class MyLinkedListTester {
 	public void testAddAtIndex()
 	{
         // TODO: implement this test
-		
+        list1.add(2,10);
+        Integer element = list1.get(2);
+        assertEquals("AddAtIndex: check addAtIndex is correct ", (Integer)10, element);
+        try {
+            list1.set(2,null);
+            fail("Check out of null value");
+        }
+        catch (NullPointerException e) {
+
+        }
+        try {
+            list1.set(5,10);
+            fail("Check out of bounds");
+        }
+        catch (IndexOutOfBoundsException e) {
+
+        }
 	}
 	
 	/** Test setting an element in the list */
@@ -153,7 +196,24 @@ public class MyLinkedListTester {
 	public void testSet()
 	{
 	    // TODO: implement this test
-	    
+        list1.set(2,9);
+        Integer element = list1.get(2);
+        assertEquals("Set: check set is correct ", (Integer)9, element);
+        try {
+            list1.set(2,null);
+            fail("Check out of null value");
+        }
+        catch (NullPointerException e) {
+
+        }
+
+        try {
+            list1.set(5,9);
+            fail("Check out of bounds");
+        }
+        catch (IndexOutOfBoundsException e) {
+
+        }
 	}
 	
 	
