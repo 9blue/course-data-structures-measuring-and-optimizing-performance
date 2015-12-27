@@ -1,10 +1,6 @@
 package spelling;
 
-import java.util.List;
-import java.util.Set;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 /** 
  * An trie data structure that implements the Dictionary and the AutoComplete ADT
@@ -29,7 +25,21 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public boolean addWord(String word)
 	{
 	    //TODO: Implement this method.
-	    return false;
+		word = word.toLowerCase();
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            if(node.getChild(c) == null){
+                node.insert(c);
+            }
+            node = node.getChild(c);
+        }
+        if (!node.endsWord()) {
+            node.setEndsWord(true);
+            size += 1;
+            return true;
+        } else {
+            return false;
+        }
 	}
 	
 	/** 
@@ -39,7 +49,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public int size()
 	{
 	    //TODO: Implement this method
-	    return 0;
+	    return size;
 	}
 	
 	
@@ -48,7 +58,15 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public boolean isWord(String s) 
 	{
 	    // TODO: Implement this method
-		return false;
+        s = s.toLowerCase();
+        TrieNode node = root;
+        for (char c : s.toCharArray()) {
+            if(node.getChild(c) == null){
+                return false;
+            }
+            node = node.getChild(c);
+        }
+		return node.endsWord();
 	}
 
 	/** 
@@ -75,8 +93,40 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       If it is a word, add it to the completions list
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
-    	 
-         return null;
+    	 prefix = prefix.toLowerCase();
+         TrieNode node = root;
+         List<String> res = new LinkedList<String>();
+         for (char c : prefix.toCharArray()) {
+             if (node.getChild(c) == null){
+                 return res;
+             }
+             node = node.getChild(c);
+         }
+         if (node.endsWord()){
+             res.add(node.getText());
+             numCompletions -= 1;
+         }
+         Queue<TrieNode> q = new LinkedList<>();
+         while (numCompletions > 0){
+             Set<Character> candidates = node.getValidNextCharacters();
+             for ( Character c : candidates) {
+                 TrieNode nextNode = node.getChild(c);
+                 if(nextNode.endsWord()){
+                     res.add(nextNode.getText());
+                     numCompletions -= 1;
+                     if (numCompletions == 0) {
+                         return res;
+                     }
+                 }
+                 q.add(nextNode);
+             }
+             if (!q.isEmpty()) {
+                node = q.remove();
+             } else {
+                 return res;
+             }
+         }
+         return res;
      }
 
  	// For debugging

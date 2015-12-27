@@ -8,7 +8,7 @@ import java.util.Set;
  * @author UC San Diego Intermediate Programming MOOC Team
  *
  */
-class TrieNode {
+class  TrieNode {
 	private HashMap<Character, TrieNode> children; 
 	private String text;  // Maybe omit for space
 	private boolean isWord;
