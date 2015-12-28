@@ -134,8 +134,7 @@ public class NearbyWords implements SpellingSuggest {
 		HashSet<String> visited = new HashSet<String>();   // to avoid exploring the same  
 														   // string multiple times
 		List<String> retList = new LinkedList<String>();   // words to return
-		 
-		
+
 		// insert first node
 		queue.add(word);
 		visited.add(word);
