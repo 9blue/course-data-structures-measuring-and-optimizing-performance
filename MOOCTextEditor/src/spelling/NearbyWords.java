@@ -139,10 +139,15 @@ public class NearbyWords implements SpellingSuggest {
 		// insert first node
 		queue.add(word);
 		visited.add(word);
+        int wordCount = 0;
 		// TODO: Implement the remainder of this method, see assignment for algorithm
         while (!queue.isEmpty() && numSuggestions > 0){
             String curr = queue.remove(0);
             List<String> neighbors = distanceOne(curr, true);
+            if ((wordCount += neighbors.size()) > THRESHOLD){
+                break;
+            }
+            wordCount += neighbors.size();
             for ( String neighbor : neighbors) {
                 if (!visited.contains(neighbor)){
                     visited.add(neighbor);
